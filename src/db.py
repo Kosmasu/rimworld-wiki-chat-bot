@@ -23,7 +23,8 @@ def init_db():
     with conn.cursor() as cur:
         cur.execute("""
             CREATE TABLE IF NOT EXISTS pages (
-                link TEXT NOT NULL,
+                id SERIAL PRIMARY KEY,
+                url TEXT NOT NULL,
                 scraped_at TIMESTAMP NULL DEFAULT NULL,
                 content TEXT
             );
