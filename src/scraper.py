@@ -86,7 +86,7 @@ def scrape_search_page(query: str):
             )
         )
 
-    return ""
+    return search_results
 
 
 def scrape_wiki_page(url: str):
@@ -109,6 +109,6 @@ def scrape_wiki_page(url: str):
 
 
 if __name__ == "__main__":
-    result = scrape_search_page(caravan)
+    result = scrape_search_page("caravan movement speed")
     if result:
         print(result)
