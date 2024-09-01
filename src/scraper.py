@@ -4,7 +4,7 @@ import urllib.parse
 from pydantic import BaseModel
 import requests
 
-from src.settings import MAIN_PAGE_URL
+from settings import MAIN_PAGE_URL
 
 
 class SearchResult(BaseModel):
@@ -34,11 +34,12 @@ def fix_url(content: Tag) -> Tag:
 
 
 def scrape_search_page(query: str):
+    base_url = "https://www.example.com/search"
     params = {
         "search": query,
     }
     query_string = urllib.parse.urlencode(params)
-    url = f"{MAIN_PAGE_URL}?{query_string}"
+    url = f"{base_url}?{query_string}"
 
     try:
         response: requests.Response = requests.get(url)
@@ -53,12 +54,9 @@ def scrape_search_page(query: str):
     if not isinstance(content_soup, Tag):
         raise Exception("No search results found!")
 
-    lis: list[Tag] = content_soup.find_all("li", class_="mw-search-result")
-
+    lis: list[Tag] = content_soup.find_all("li", class_="mw-search-results")
     search_results: list[SearchResult] = []
     for li in lis:
-        li = fix_url(li)
-        
         # Check if title_element is of type Tag
         title_element: Tag | NavigableString | None = li.find("a")
         if not isinstance(title_element, Tag):
@@ -112,4 +110,5 @@ def scrape_wiki_page(url: str):
 
 if __name__ == "__main__":
     result = scrape_search_page("caravan movement speed")
-    print(result)
+    if result:
+        print(result)

@@ -16,7 +16,6 @@ beautifulsoup4 = "^4.12.3"
 pydantic = "^2.8.2"
 markdownify = "^0.13.1"
 streamlit = "^1.38.0"
-openai = "^1.43.0"
 
 
 [build-system]
